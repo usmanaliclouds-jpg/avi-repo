@@ -1,1 +1,86 @@
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; } header { background-color: #333; color: #fff; padding: 1em; text-align: center; } header nav { display: flex; justify-content: flex-end; } #theme-toggle { background-color: #444; border: none; border-radius: 0.5em; color: #fff; cursor: pointer; padding: 0.5em 1em; } #theme-toggle:hover { background-color: #555; } .metric-summary { display: flex; flex-direction: column; align-items: center; padding: 2em; } .metric-cards { display: flex; flex-wrap: wrap; justify-content: center; } .metric-card { background-color: #f7f7f7; border: 1px solid #ddd; border-radius: 0.5em; margin: 1em; padding: 1em; width: calc(25% - 2em); } .chart-widget { padding: 2em; } #chart { height: 400px; width: 100%; } .data-filters { padding: 2em; } form { display: flex; flex-direction: column; } label { margin-bottom: 0.5em; } input, select { margin-bottom: 1em; padding: 0.5em; } button { background-color: #4CAF50; border: none; border-radius: 0.5em; color: #fff; cursor: pointer; padding: 0.5em 1em; } button:hover { background-color: #3e8e41; } .user-data-table { padding: 2em; } #search-input { padding: 0.5em; width: 100%; } table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #ddd; padding: 0.5em; } th { background-color: #f7f7f7; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.metric-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px;
+    width: calc(25% - 40px);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.chart-container {
+    margin: 40px 0;
+}
+
+#chart {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+.filter-controls {
+    margin: 20px 0;
+}
+
+#filter-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.data-table-container {
+    margin: 40px 0;
+}
+
+#data-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#data-table th, #data-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#table-body {
+    background-color: #f9f9f9;
+}
+
+.pagination-controls {
+    margin: 20px 0;
+}
+
+#prev-page, #next-page {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+}
+
+#prev-page:hover, #next-page:hover {
+    background-color: #3e8e41;
+}
