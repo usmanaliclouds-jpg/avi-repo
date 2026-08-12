@@ -1,1 +1,99 @@
-const monthlyRevenue = document.getElementById('monthly-revenue'); const activeSubscribers = document.getElementById('active-subscribers'); const conversionRate = document.getElementById('conversion-rate'); const systemUptime = document.getElementById('system-uptime'); const chart = document.getElementById('chart').getContext('2d'); const applyFiltersButton = document.getElementById('apply-filters'); const searchDataTableBody = document.getElementById('user-data-table-body'); const searchInput = document.getElementById('search-input'); let userData = []; let filteredUserData = []; let chartData = []; const themeToggle = document.getElementById('theme-toggle'); themeToggle.addEventListener('click', () => { document.body.classList.toggle('dark-mode'); }); applyFiltersButton.addEventListener('click', () => { const dateRange = document.getElementById('date-range').value; const filterType = document.getElementById('filter-type').value; filteredUserData = userData.filter(user => { if (filterType === 'all') return true; if (filterType === 'active' && user.isActive) return true; if (filterType === 'inactive' && !user.isActive) return true; return false; }); updateChartData(); updateUserDataTable(); }); searchInput.addEventListener('input', () => { const searchQuery = searchInput.value.toLowerCase(); filteredUserData = userData.filter(user => { return user.name.toLowerCase().includes(searchQuery) || user.email.toLowerCase().includes(searchQuery); }); updateUserDataTable(); }); function updateChartData() { chartData = filteredUserData.map(user => { return { label: user.name, data: [user.usage], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 }; }); const myChart = new Chart(chart, { type: 'bar', data: { labels: chartData.map(data => data.label), datasets: chartData }, options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } }); } function updateUserDataTable() { searchDataTableBody.innerHTML = ''; filteredUserData.forEach(user => { const row = document.createElement('tr'); const userIdCell = document.createElement('td'); const nameCell = document.createElement('td'); const emailCell = document.createElement('td'); userIdCell.textContent = user.id; nameCell.textContent = user.name; emailCell.textContent = user.email; row.appendChild(userIdCell); row.appendChild(nameCell); row.appendChild(emailCell); searchDataTableBody.appendChild(row); }); } function initData() { userData = [{ id: 1, name: 'John Doe', email: 'john@example.com', usage: 100, isActive: true }, { id: 2, name: 'Jane Doe', email: 'jane@example.com', usage: 200, isActive: false }, { id: 3, name: 'Bob Smith', email: 'bob@example.com', usage: 300, isActive: true }]; updateChartData(); updateUserDataTable(); monthlyRevenue.textContent = '$1000'; activeSubscribers.textContent = '100'; conversionRate.textContent = '20%'; systemUptime.textContent = '99.99%'; } initData();
+const revenueElement = document.getElementById('revenue');
+const activeUsersElement = document.getElementById('active-users');
+const conversionRateElement = document.getElementById('conversion-rate');
+const systemUptimeElement = document.getElementById('system-uptime');
+const chartCanvas = document.getElementById('chart');
+const filterSelect = document.getElementById('filter-select');
+const dataTable = document.getElementById('data-table');
+const tableBody = document.getElementById('table-body');
+const prevPageButton = document.getElementById('prev-page');
+const nextPageButton = document.getElementById('next-page');
+
+let currentPage = 1;
+let data = [];
+
+// Initialize chart
+const chart = new Chart(chartCanvas, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Data',
+            data: [],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Fetch data from API
+async function fetchData() {
+    const response = await fetch('/api/data');
+    const jsonData = await response.json();
+    data = jsonData;
+    updateMetricCards();
+    updateChartData();
+    updateDataTable();
+}
+
+// Update metric cards
+function updateMetricCards() {
+    revenueElement.textContent = `$${data.revenue}`;
+    activeUsersElement.textContent = data.activeUsers;
+    conversionRateElement.textContent = `${data.conversionRate}%`;
+    systemUptimeElement.textContent = `${data.systemUptime}%`;
+}
+
+// Update chart data
+function updateChartData() {
+    chart.data.labels = data.chartLabels;
+    chart.data.datasets[0].data = data.chartData;
+    chart.update();
+}
+
+// Update data table
+function updateDataTable() {
+    tableBody.innerHTML = '';
+    data.tableData.forEach((row) => {
+        const rowElement = document.createElement('tr');
+        rowElement.innerHTML = `
+            <td>${row.id}</td>
+            <td>${row.name}</td>
+            <td>${row.email}</td>
+        `;
+        tableBody.appendChild(rowElement);
+    });
+}
+
+// Handle filter select change
+filterSelect.addEventListener('change', async (e) => {
+    const filterValue = e.target.value;
+    const response = await fetch(`/api/data?filter=${filterValue}`);
+    const jsonData = await response.json();
+    data = jsonData;
+    updateMetricCards();
+    updateChartData();
+    updateDataTable();
+});
+
+// Handle pagination button clicks
+prevPageButton.addEventListener('click', () => {
+    currentPage--;
+    updateDataTable();
+});
+
+nextPageButton.addEventListener('click', () => {
+    currentPage++;
+    updateDataTable();
+});
+
+// Initialize data
+fetchData();
