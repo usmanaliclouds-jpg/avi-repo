@@ -2,57 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Kanban Task Board</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="metric-cards">
-            <div class="card">
-                <h2>Revenue</h2>
-                <p id="revenue">$0</p>
-            </div>
-            <div class="card">
-                <h2>Active Users</h2>
-                <p id="active-users">0</p>
-            </div>
-            <div class="card">
-                <h2>Conversion Rate</h2>
-                <p id="conversion-rate">0%</p>
-            </div>
-            <div class="card">
-                <h2>System Uptime</h2>
-                <p id="system-uptime">0%</p>
-            </div>
+    <div class="board">
+        <div class="column" id="to-do">
+            <h2>To Do</h2>
+            <div class="tasks" id="to-do-tasks"></div>
         </div>
-        <div class="chart-container">
-            <canvas id="chart"></canvas>
+        <div class="column" id="in-progress">
+            <h2>In Progress</h2>
+            <div class="tasks" id="in-progress-tasks"></div>
         </div>
-        <div class="filter-controls">
-            <select id="filter-select">
-                <option value="all">All</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-            </select>
+        <div class="column" id="completed">
+            <h2>Completed</h2>
+            <div class="tasks" id="completed-tasks"></div>
         </div>
-        <div class="data-table-container">
-            <table id="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                </tbody>
-            </table>
-            <div class="pagination-controls">
-                <button id="prev-page">Prev</button>
-                <button id="next-page">Next</button>
-            </div>
+    </div>
+    <button id="create-task-btn">Create Task</button>
+    <div class="modal" id="create-task-modal">
+        <div class="modal-content">
+            <h2>Create Task</h2>
+            <form id="create-task-form">
+                <label for="task-name">Task Name:</label>
+                <input type="text" id="task-name" name="task-name"><br><br>
+                <label for="task-description">Task Description:</label>
+                <textarea id="task-description" name="task-description"></textarea><br><br>
+                <button id="submit-task-btn">Create</button>
+            </form>
         </div>
     </div>
     <script src="script.js"></script>
