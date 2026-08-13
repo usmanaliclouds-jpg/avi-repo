@@ -1,83 +1,64 @@
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-let columns = document.querySelectorAll('.column');
-let createTaskBtn = document.getElementById('create-task-btn');
-let createTaskModal = document.getElementById('create-task-modal');
-let createTaskForm = document.getElementById('create-task-form');
-let taskNameInput = document.getElementById('task-name');
-let taskDescriptionInput = document.getElementById('task-description');
+const ctx1 = document.getElementById('chart1').getContext('2d');
+const ctx2 = document.getElementById('chart2').getContext('2d');
 
-// Create task
-createTaskBtn.addEventListener('click', () => {
-    createTaskModal.style.display = 'block';
-});
-
-createTaskForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let taskName = taskNameInput.value;
-    let taskDescription = taskDescriptionInput.value;
-    let newTask = {
-        name: taskName,
-        description: taskDescription,
-        status: 'to-do'
-    };
-    tasks.push(newTask);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    renderTasks();
-    createTaskModal.style.display = 'none';
-    taskNameInput.value = '';
-    taskDescriptionInput.value = '';
-});
-
-// Render tasks
-function renderTasks() {
-    let toDoTasks = document.getElementById('to-do-tasks');
-    let inProgressTasks = document.getElementById('in-progress-tasks');
-    let completedTasks = document.getElementById('completed-tasks');
-    toDoTasks.innerHTML = '';
-    inProgressTasks.innerHTML = '';
-    completedTasks.innerHTML = '';
-    tasks.forEach((task) => {
-        let taskElement = document.createElement('div');
-        taskElement.classList.add('task');
-        taskElement.innerHTML = `<h3>${task.name}</h3><p>${task.description}</p>`;
-        taskElement.setAttribute('draggable', 'true');
-        taskElement.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('task', JSON.stringify(task));
-        });
-        if (task.status === 'to-do') {
-            toDoTasks.appendChild(taskElement);
-        } else if (task.status === 'in-progress') {
-            inProgressTasks.appendChild(taskElement);
-        } else if (task.status === 'completed') {
-            completedTasks.appendChild(taskElement);
+const chart1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May'],
+        datasets: [{
+            label: 'Dataset 1',
+            data: [10, 20, 30, 40, 50],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
         }
-    });
-}
-
-// Drag and drop
-columns.forEach((column) => {
-    column.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-    column.addEventListener('drop', (e) => {
-        e.preventDefault();
-        let task = JSON.parse(e.dataTransfer.getData('task'));
-        let columnId = column.id;
-        if (columnId === 'to-do') {
-            task.status = 'to-do';
-        } else if (columnId === 'in-progress') {
-            task.status = 'in-progress';
-        } else if (columnId === 'completed') {
-            task.status = 'completed';
-        }
-        tasks.forEach((t, index) => {
-            if (t.name === task.name && t.description === task.description) {
-                tasks[index] = task;
-            }
-        });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        renderTasks();
-    });
+    }
 });
 
-renderTasks();
+const chart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May'],
+        datasets: [{
+            label: 'Dataset 2',
+            data: [10, 20, 30, 40, 50],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+const filterSelect = document.getElementById('filter-select');
+const startDate = document.getElementById('start-date');
+const endDate = document.getElementById('end-date');
+
+filterSelect.addEventListener('change', (e) => {
+    console.log(`Filter changed to: ${e.target.value}`);
+});
+
+startDate.addEventListener('change', (e) => {
+    console.log(`Start date changed to: ${e.target.value}`);
+});
+
+endDate.addEventListener('change', (e) => {
+    console.log(`End date changed to: ${e.target.value}`);
+});
