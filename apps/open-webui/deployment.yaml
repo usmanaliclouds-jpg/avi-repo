@@ -18,10 +18,6 @@ spec:
       tolerations:
         - key: "node.kubernetes.io/disk-pressure"
           operator: "Exists"
-          effect: "NoSchedule"
-        - key: "node.kubernetes.io/disk-pressure"
-          operator: "Exists"
-          effect: "NoExecute"
         - key: "node.kubernetes.io/not-ready"
           operator: "Exists"
         - key: "node.kubernetes.io/unreachable"
@@ -35,7 +31,7 @@ spec:
             - name: PORT
               value: "8080"
             - name: OLLAMA_BASE_URL
-              value: "http://ollama.ai-platform.svc.cluster.local:11434"
+              value: "http://192.168.100.9:11435"
             - name: WEBUI_AUTH
               value: "false"
             - name: OFFLINE_MODE
