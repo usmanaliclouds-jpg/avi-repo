@@ -30,7 +30,6 @@ spec:
                   key: password
           ports:
             - containerPort: 5432
-              name: postgres
           resources:
             requests:
               memory: "128Mi"
@@ -44,37 +43,14 @@ kind: Service
 metadata:
   name: postgres
   namespace: ai-platform
-  labels:
-    app: postgres
 spec:
   type: ClusterIP
   ports:
     - port: 5432
       targetPort: 5432
-      name: postgres
   selector:
     app: postgres
 ---
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: postgres-credentials
-  namespace: ai-platform
-spec:
-  refreshInterval: 1h
-  secretStoreRef:
-    name: vault-backend
-    kind: ClusterSecretStore
-  target:
-    name: postgres-credentials
-    creationPolicy: Owner
-  data:
-    - secretKey: password
-      remoteRef:
-        key: secret/data/postgres
-        property: password
----
-# Fallback Secret for Initial Bootstrap before Vault populates
 apiVersion: v1
 kind: Secret
 metadata:

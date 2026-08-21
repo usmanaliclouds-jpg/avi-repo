@@ -24,20 +24,12 @@ spec:
             - --console-address=:9001
           env:
             - name: MINIO_ROOT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: minio-credentials
-                  key: access-key
+              value: "minioadmin"
             - name: MINIO_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: minio-credentials
-                  key: secret-key
+              value: "minioadmin_secure_key"
           ports:
             - containerPort: 9000
-              name: api
             - containerPort: 9001
-              name: console
           resources:
             requests:
               memory: "128Mi"
@@ -51,8 +43,6 @@ kind: Service
 metadata:
   name: minio
   namespace: ai-platform
-  labels:
-    app: minio
 spec:
   type: ClusterIP
   ports:
@@ -64,36 +54,3 @@ spec:
       name: console
   selector:
     app: minio
----
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: minio-credentials
-  namespace: ai-platform
-spec:
-  refreshInterval: 1h
-  secretStoreRef:
-    name: vault-backend
-    kind: ClusterSecretStore
-  target:
-    name: minio-credentials
-    creationPolicy: Owner
-  data:
-    - secretKey: access-key
-      remoteRef:
-        key: secret/data/minio
-        property: access-key
-    - secretKey: secret-key
-      remoteRef:
-        key: secret/data/minio
-        property: secret-key
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: minio-credentials
-  namespace: ai-platform
-type: Opaque
-stringData:
-  access-key: "minioadmin"
-  secret-key: "minioadmin_secure_key"
