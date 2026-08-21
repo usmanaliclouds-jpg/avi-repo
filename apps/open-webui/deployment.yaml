@@ -15,10 +15,18 @@ spec:
       labels:
         app: open-webui
     spec:
+      tolerations:
+        - key: "node.kubernetes.io/disk-pressure"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - name: open-webui
           image: ghcr.io/open-webui/open-webui:main
           env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "8080"
             - name: OLLAMA_BASE_URL
               value: "http://ollama.ai-platform.svc.cluster.local:11434"
             - name: WEBUI_AUTH
