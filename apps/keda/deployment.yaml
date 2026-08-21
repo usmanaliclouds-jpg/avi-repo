@@ -22,7 +22,7 @@ spec:
             - /keda
           env:
             - name: WATCH_NAMESPACE
-              value: ""
+              value: "platform"
           resources:
             requests:
               memory: "64Mi"
