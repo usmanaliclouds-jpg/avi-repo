@@ -19,6 +19,9 @@ spec:
         - key: "node.kubernetes.io/disk-pressure"
           operator: "Exists"
           effect: "NoSchedule"
+        - key: "node.kubernetes.io/disk-pressure"
+          operator: "Exists"
+          effect: "NoExecute"
       containers:
         - name: ollama
           image: ollama/ollama:0.1.38
