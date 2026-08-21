@@ -15,17 +15,15 @@ spec:
       labels:
         app: ollama
     spec:
+      tolerations:
+        - key: "node.kubernetes.io/disk-pressure"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - name: ollama
           image: ollama/ollama:0.1.38
           ports:
             - containerPort: 11434
-              name: http
-          env:
-            - name: OLLAMA_KEEP_ALIVE
-              value: "5m"
-            - name: OLLAMA_MODELS
-              value: "/root/.ollama/models"
           resources:
             requests:
               memory: "512Mi"
@@ -39,13 +37,10 @@ kind: Service
 metadata:
   name: ollama
   namespace: ai-platform
-  labels:
-    app: ollama
 spec:
   type: ClusterIP
   ports:
     - port: 11434
       targetPort: 11434
-      name: http
   selector:
     app: ollama
