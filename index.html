@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="metric-cards">
+            <div class="card">
+                <h2>Revenue</h2>
+                <p>$1000</p>
+            </div>
+            <div class="card">
+                <h2>Active Users</h2>
+                <p>100</p>
+            </div>
+            <div class="card">
+                <h2>Conversion Rate</h2>
+                <p>20%</p>
+            </div>
+            <div class="card">
+                <h2>System Uptime</h2>
+                <p>99.99%</p>
+            </div>
+        </div>
+        <div class="charts">
+            <div class="chart">
+                <canvas id="chart1"></canvas>
+            </div>
+            <div class="chart">
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
+        <div class="filter-controls">
+            <select id="filter-select">
+                <option value="all">All</option>
+                <option value="last-30-days">Last 30 Days</option>
+                <option value="last-60-days">Last 60 Days</option>
+            </select>
+            <input type="date" id="start-date">
+            <input type="date" id="end-date">
+        </div>
+        <div class="data-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>johndoe@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Doe</td>
+                        <td>janedoe@example.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
