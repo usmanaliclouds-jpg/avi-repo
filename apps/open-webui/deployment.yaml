@@ -28,9 +28,11 @@ spec:
             - name: PORT
               value: "8080"
             - name: OLLAMA_BASE_URL
-              value: "http://ollama.ai-platform.svc.cluster.local:11434"
+              value: "http://192.168.100.9:11435"
             - name: WEBUI_AUTH
               value: "false"
+            - name: OFFLINE_MODE
+              value: "true"
             - name: RAG_EMBEDDING_MODEL
               value: ""
             - name: VECTOR_DB
