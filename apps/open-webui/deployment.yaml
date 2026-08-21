@@ -31,12 +31,12 @@ spec:
               value: "http://ollama.ai-platform.svc.cluster.local:11434"
             - name: WEBUI_AUTH
               value: "false"
-            - name: OFFLINE_MODE
-              value: "true"
-            - name: RAG_EMBEDDING_ENGINE
+            - name: RAG_EMBEDDING_MODEL
               value: ""
-            - name: ENABLE_RAG_HYBRID_SEARCH
-              value: "false"
+            - name: VECTOR_DB
+              value: "qdrant"
+            - name: QDRANT_URI
+              value: "http://qdrant.ai-platform.svc.cluster.local:6333"
           ports:
             - containerPort: 8080
               name: http
