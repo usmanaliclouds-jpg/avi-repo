@@ -20,6 +20,9 @@ spec:
           image: ghcr.io/kedacore/keda:2.14.0
           command:
             - /keda
+          env:
+            - name: WATCH_NAMESPACE
+              value: ""
           resources:
             requests:
               memory: "64Mi"
