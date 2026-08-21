@@ -20,7 +20,7 @@ spec:
           image: longhornio/longhorn-manager:v1.6.2
           command:
             - longhorn-manager
-            - version
+            - deploy-driver
           resources:
             requests:
               memory: "64Mi"
