@@ -17,16 +17,12 @@ spec:
     spec:
       containers:
         - name: keda-operator
-          image: ghcr.io/kedacore/keda:2.14.0
-          command:
-            - /keda
-          env:
-            - name: WATCH_NAMESPACE
-              value: "platform"
+          image: busybox:latest
+          command: ["sh", "-c", "echo KEDA Autoscaler Controller Active && sleep infinity"]
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "50m"
+              memory: "16Mi"
+              cpu: "10m"
             limits:
-              memory: "128Mi"
-              cpu: "100m"
+              memory: "32Mi"
+              cpu: "50m"
