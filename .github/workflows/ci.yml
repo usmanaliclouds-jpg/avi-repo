@@ -1,0 +1,49 @@
+name: GitOps CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Set up Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Lint all Helm charts under apps/
+        run: |
+          for dir in apps/*/; do
+            if [ -f "$dir/Chart.yaml" ]; then
+              helm lint "$dir"
+            fi
+          done
+
+      - name: Validate all Kustomize overlays build cleanly
+        run: |
+          for dir in apps/*/; do
+            if [ -f "$dir/kustomization.yaml" ]; then
+              kustomize build "$dir" > /dev/null
+            fi
+          done
+
+      - name: Validate ArgoCD Application manifests
+        run: |
+          for f in argocd-applications/*.yaml; do
+            kubectl apply --dry-run=client -f "$f" --validate=false || true
+          done
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2

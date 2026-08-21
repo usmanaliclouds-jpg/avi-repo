@@ -1,0 +1,27 @@
+# Local Kubeconfig & Cluster Data
+kubeconfig
+*.kubeconfig
+.kube/
+.rancher/
+
+# Secret & Credential files (except *.template.yaml)
+*secret*
+!*secret*.template.yaml
+!*secret*.example.yaml
+*credentials*
+!*credentials*.template.yaml
+!*credentials*.example.yaml
+*.env
+*.env.local
+
+# Helm & Kustomize build artifacts
+*.tgz
+.chart-cache/
+charts/
+
+# OS and Editor files
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/

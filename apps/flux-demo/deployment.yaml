@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flux-demo-app
+  namespace: gitops
+  labels:
+    app: flux-demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flux-demo-app
+  template:
+    metadata:
+      labels:
+        app: flux-demo-app
+    spec:
+      containers:
+        - name: web
+          image: nginxdemos/hello:plain-text
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "50m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flux-demo-app
+  namespace: gitops
+  labels:
+    app: flux-demo-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      name: http
+  selector:
+    app: flux-demo-app

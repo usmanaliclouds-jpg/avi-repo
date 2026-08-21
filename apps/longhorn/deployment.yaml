@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: longhorn-driver-deployer
+  namespace: platform
+  labels:
+    app: longhorn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: longhorn
+  template:
+    metadata:
+      labels:
+        app: longhorn
+    spec:
+      containers:
+        - name: longhorn-driver-deployer
+          image: longhornio/longhorn-manager:v1.6.2
+          command:
+            - longhorn-manager
+            - version
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

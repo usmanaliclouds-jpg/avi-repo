@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: qdrant
+  namespace: gitops
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/usmanali/platform-gitops.git"
+    targetRevision: HEAD
+    path: apps/qdrant
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: ai-platform
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
