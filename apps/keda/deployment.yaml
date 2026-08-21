@@ -19,7 +19,7 @@ spec:
         - name: keda-operator
           image: ghcr.io/kedacore/keda:2.14.0
           command:
-            - keda-operator
+            - /keda
           resources:
             requests:
               memory: "64Mi"
