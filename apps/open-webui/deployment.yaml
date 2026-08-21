@@ -28,7 +28,7 @@ spec:
             - name: PORT
               value: "8080"
             - name: OLLAMA_BASE_URL
-              value: "http://192.168.100.9:11435"
+              value: "http://ollama.ai-platform.svc.cluster.local:11434"
             - name: WEBUI_AUTH
               value: "false"
             - name: ENABLE_RAG_WEB_SEARCH
