@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/usmanaliclouds-jpg/avi-repo'
+    repoURL: 'https://github.com/usmanaliclouds-jpg/avi-repo.git'
     targetRevision: HEAD
     path: apps/cert-manager
   destination:
