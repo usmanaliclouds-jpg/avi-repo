@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/usmanali/platform-gitops.git"
+    repoURL: "https://github.com/usmanaliclouds-jpg/avi-repo"
     targetRevision: HEAD
     path: apps/keda
   destination:
